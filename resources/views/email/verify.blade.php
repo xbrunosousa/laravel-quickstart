@@ -8,8 +8,8 @@
 </head>
 
 <body>
-    <h3>Hello, {{$name}}.</h3>
-    <h2><a href="{{env('VERIFICATION_FRONT_URL') . $hash}}">Click here</a> to activate your accont</h2>
+    <h3>{{__('signup.email.salutation')}}, {{$name}}.</h3>
+    <h2><a href="{{env('VERIFICATION_FRONT_URL') . $hash}}">{{__('signup.email.click_here')}}</a> {{__('signup.email.to_activate_account')}}.</h2>
 </body>
 
 </html>

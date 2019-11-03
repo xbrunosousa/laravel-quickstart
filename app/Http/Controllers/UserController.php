@@ -63,9 +63,9 @@ class UserController extends Controller
             ], [
                 'email' => $request->email,
                 'name' => $request->name
-            ], __('user.verify_your_account'));
+            ], __('signup.verify_your_account'));
 
-            return $this->success(__('user.email_verification_sended'));
+            return $this->success(__('signup.email_verification_sended'));
         } catch (\Throwable $th) {
             return $this->error($th->getMessage());
         }
