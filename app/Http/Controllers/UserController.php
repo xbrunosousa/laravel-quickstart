@@ -139,6 +139,12 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'string|required',
+            'password' => 'string|required|min:8'
+        ]);
+        if ($validator->fails()) return $this->error($validator->errors()->first());
+
         $credentials = $request->only('email', 'password');
         if ($token = JWTAuth::attempt($credentials)) {
             return $this->successData(['token' => $token]);
@@ -208,7 +214,8 @@ class UserController extends Controller
         return $this->success(__('user.reseted_pwd'));
     }
 
-    public function my() {
+    public function my()
+    {
         return $this->successData(Auth::user());
     }
 }
