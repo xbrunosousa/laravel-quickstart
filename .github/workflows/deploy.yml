@@ -1,0 +1,36 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: webfactory/ssh-agent@v0.1.1
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_PRIVATE }}
+
+      - name: Setup ssh host checking
+        run: echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > $HOME/.ssh/config
+
+      # - name: Set Node.js
+      #   uses: actions/setup-node@master
+      #   with:
+      #     node-version: 10.x
+
+      # - name: Install dependencies
+      #   run: yarn
+
+      # - name: Build
+      #   run: yarn build
+      #   env:
+      #     REACT_APP_GA_TRACKING_ID: UA-121994767-3
+      #     NODE_ENV: production
+      #     REACT_APP_PRIMARY_URL: brunosousa.dev
+
+      # - name: Deploy to DigitalOcean
+      #   run: rsync -rav -e "ssh" --delete ./build/ --progress www-data@brunosousa.dev:/var/www/brunosousa.dev/
