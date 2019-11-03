@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{\Lang::locale()}}">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,8 @@
 
 <body>
     <h3>{{__('user.email.salutation')}}, {{$name}}.</h3>
-    <h2><a href="{{env('VERIFICATION_FRONT_URL') . $hash}}">{{__('user.email.click_here')}}</a> {{__('user.email.to_activate_account')}}.</h2>
+    <br />
+    <h2>{{__('user.email.reseted_password_body')}}.</h2>
 </body>
 
 </html>
