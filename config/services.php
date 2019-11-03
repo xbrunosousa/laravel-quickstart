@@ -33,5 +33,9 @@ return [
         'api_key' => env('SENDGRID_API_KEY'),
         'endpoint' => env('SENDGRID_ENDPOINT')
     ],
+    'recaptcha' => [
+        'url' => env('GOOGLE_RECAPTCHA_V2_URL', 'https://www.google.com/recaptcha/api/siteverify'),
+        'secret' => env('GOOGLE_RECAPTCHA_V2_SECRET')
+    ]
 
 ];

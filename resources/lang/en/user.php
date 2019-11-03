@@ -13,6 +13,7 @@ return [
     'token_reset_pwd_invalid' => 'Invalid or expired link',
     'email_subject_confirm_reset_pwd' => "Your password in {$appName} has been reseted",
     'reseted_pwd' => 'Your password has been reseted',
+    'invalid_recaptcha' => 'Invalid recaptcha',
     'email' => [
         'salutation' => 'Hello',
         'click_here' => 'Click here',

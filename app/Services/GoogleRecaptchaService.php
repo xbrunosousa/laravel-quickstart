@@ -6,7 +6,7 @@ use GuzzleHttp\Client as guzzle;
 
 class GoogleRecaptchaService
 {
-    public function checkRecaptcha($recaptcha)
+    public function validate($recaptcha)
     {
         $guzzle = new guzzle;
         $response = $guzzle->request('POST', config('services.recaptcha.url'), [

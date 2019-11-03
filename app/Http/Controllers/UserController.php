@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User, JWTAuth, DB, Validator, Carbon\Carbon, Auth;
+use App\Services\GoogleRecaptchaService as Recaptcha;
 
 class UserController extends Controller
 {
@@ -156,9 +157,14 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'string|required',
-            'password' => 'string|required|min:8'
+            'password' => 'string|required|min:8',
+            'recaptcha' => 'string|required'
         ]);
         if ($validator->fails()) return $this->error($validator->errors()->first());
+
+        if (!(new Recaptcha)->validate($request->recaptcha)) {
+            return $this->error(__('user.invalid_recaptcha'));
+        }
 
         $credentials = $request->only('email', 'password');
         if ($token = JWTAuth::attempt($credentials)) {
