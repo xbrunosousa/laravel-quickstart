@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePasswordResetsTable extends Migration
 {
+    public $tableName = 'password_resets';
+
     /**
      * Run the migrations.
      *
@@ -13,10 +15,15 @@ class CreatePasswordResetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
+        Schema::create($this->tableName, function (Blueprint $table) {
+            $table->integer('user_id')->nullable()->unsigned();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')->onDelete('cascade')->unique();
+
             $table->string('token');
-            $table->timestamp('created_at')->nullable();
+
+            $table->timestamp('created_at');
         });
     }
 
@@ -27,6 +34,6 @@ class CreatePasswordResetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists($this->tableName);
     }
 }
