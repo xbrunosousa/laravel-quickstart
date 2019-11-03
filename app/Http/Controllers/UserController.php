@@ -87,16 +87,6 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -105,9 +95,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+        if ($validator->fails()) return $this->error($validator->errors()->first());
+
+        $user = Auth::user();
+        if ($name = $request->name) $user->name = $name;
+        $user->password = \Hash::make($request->password);
+        $user->save();
+
+        return $this->successData($user->fresh());
     }
 
     /**
@@ -121,6 +122,13 @@ class UserController extends Controller
         //
     }
 
+
+    /**
+     * Activate user account per email hash sended.
+     *
+     * @param  string  $code
+     * @return \Illuminate\Http\Response
+     */
     public function verify($code)
     {
         $verification = DB::table($this->tableVerification)->whereHash($code)->first();
@@ -137,6 +145,13 @@ class UserController extends Controller
         return $this->error(__('user.invalid_link_confirmation'));
     }
 
+
+    /**
+     * Login user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -152,6 +167,13 @@ class UserController extends Controller
         return $this->error(__('user.login_fail'));
     }
 
+
+    /**
+     * Send email to user reset password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function requestPasswordReset(Request $request)
     {
         $validator = Validator::make($request->all(), ['email' => 'required|email']);
@@ -178,6 +200,12 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Receive hash and update user pwd.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function resetPwd(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -214,6 +242,12 @@ class UserController extends Controller
         return $this->success(__('user.reseted_pwd'));
     }
 
+
+    /**
+     * Show current user logged.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function my()
     {
         return $this->successData(Auth::user());
