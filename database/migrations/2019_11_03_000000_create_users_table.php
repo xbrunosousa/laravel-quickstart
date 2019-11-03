@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
+            $table->enum('role', ['A', 'D'])->default('D')->comment('A=admin, D=default');
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->engine = 'InnoDB';
