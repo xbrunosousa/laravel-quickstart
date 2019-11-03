@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User, JWTAuth, DB, Validator, Carbon\Carbon;
+use App\User, JWTAuth, DB, Validator, Carbon\Carbon, Auth;
 
 class UserController extends Controller
 {
@@ -206,5 +206,9 @@ class UserController extends Controller
         ], __('user.email_subject_confirm_reset_pwd'));
 
         return $this->success(__('user.reseted_pwd'));
+    }
+
+    public function my() {
+        return $this->successData(Auth::user());
     }
 }
