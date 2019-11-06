@@ -1,3 +1,5 @@
+<img src="https://github.com/xbrunosousa/laravel-quickstart/workflows/Deploy to DigitalOcean/badge.svg">
+
 ## Laravel QuickStart
 
 ### Resources:
