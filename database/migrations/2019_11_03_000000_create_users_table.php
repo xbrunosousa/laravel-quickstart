@@ -16,13 +16,18 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create($this->tableName, function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('uuid');
-            $table->string('name');
-            $table->string('avatar')->nullable();
-            $table->string('email')->unique();
-            $table->enum('role', ['A', 'D'])->default('D')->comment('A=admin, D=default');
+            $table->id();
+            $table->string('username')->unique()->index();
             $table->string('password');
+            $table->string('email')->unique()->index();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('avatar')->nullable();
+
+            $table->enum('role', [
+                'A', 'U', 'S'
+            ])->default('U')->comment('A=admin, U=user, S=superUser');
+
             $table->timestamp('email_verified_at')->nullable();
             $table->engine = 'InnoDB';
             $table->timestamps();

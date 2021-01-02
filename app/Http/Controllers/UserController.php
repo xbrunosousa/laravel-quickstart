@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User, JWTAuth, DB, Validator, Carbon\Carbon, Auth;
+use App\Models\User, DB, Validator, Carbon\Carbon, Auth;
 use App\Services\GoogleRecaptchaService as Recaptcha;
 
 class UserController extends Controller

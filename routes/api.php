@@ -6,7 +6,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
 
     $api->group(['prefix' => 'user'], function () use ($api) {
         $api->post('', 'UserController@store');
-        $api->group(['middleware' => 'jwt.auth'], function () use ($api) {
+        $api->group(['middleware' => 'auth:sanctum'], function () use ($api) {
             $api->put('', 'UserController@update');
             $api->get('', 'UserController@my');
         });
